@@ -1,0 +1,9 @@
+node_modules
+dist
+.env.local
+.cache
+*.tsbuildinfo
+.claude
+# stray local caches and debug scripts
+undefined/
+server/_probe.ts

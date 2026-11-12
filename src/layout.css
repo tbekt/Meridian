@@ -1,0 +1,514 @@
+/* Styles for the panel tabs, insights, layers, dialogs and responsive tiers.
+   Layout tiers are set on .app as app--compact / app--medium / app--wide (+ is-short). */
+
+/* ── Panel header additions ───────────────────────────────────────────── */
+.brand-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.brand-row--compact {
+  gap: 8px;
+}
+.brand-row--compact .region-button {
+  min-width: 0;
+}
+.region-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.panel-tabs {
+  margin-top: 10px;
+}
+.segmented--full {
+  display: flex;
+  width: 100%;
+}
+.segmented--full button {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-width: 0;
+}
+.tab-count {
+  font-size: 11px;
+  font-weight: 700;
+  min-width: 18px;
+  padding: 0 5px;
+  border-radius: 99px;
+  background: var(--fill-strong);
+}
+.list-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 18px 0;
+  font-size: 13px;
+  color: var(--label-2);
+}
+.row-saved {
+  color: var(--accent);
+  display: inline-flex;
+}
+.pill-button.is-on {
+  background: var(--accent);
+  color: #fff;
+}
+.icon-button.is-tinted {
+  color: var(--accent);
+  background: var(--accent-fill);
+}
+.panel-foot-note {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.kbd-hint {
+  color: var(--label-2);
+  padding: 6px;
+  border-radius: 8px;
+}
+.kbd-hint:hover {
+  background: var(--fill);
+  color: var(--label);
+}
+
+/* Collapsed panel */
+.panel-pill {
+  position: absolute;
+  top: max(16px, env(safe-area-inset-top));
+  left: max(16px, env(safe-area-inset-left));
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 6px 4px 4px;
+  border-radius: 16px;
+  animation: pop 0.2s var(--ease);
+}
+.panel-pill-title {
+  font-size: 15px;
+  font-weight: 600;
+}
+.panel-pill-meta {
+  font-size: 13px;
+  color: var(--label-2);
+}
+
+/* Layers popover opens to the left of the map controls */
+.layers-pop {
+  top: auto;
+  bottom: -6px;
+  right: calc(100% + 12px);
+  width: 300px;
+  padding: 8px;
+  transform-origin: right bottom;
+}
+.layers-pop .segmented--full {
+  margin: 2px 2px 4px;
+  width: calc(100% - 4px);
+}
+.pop-foot--stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 12px 6px 6px;
+}
+
+/* ── Insights ─────────────────────────────────────────────────────────── */
+.insights {
+  padding: 4px 18px 20px;
+}
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin: 12px 0 0;
+}
+.stat-grid > div {
+  background: var(--fill);
+  border-radius: 14px;
+  padding: 10px 12px;
+  min-width: 0;
+}
+.stat-grid dt {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--label-2);
+}
+.stat-grid dd {
+  margin: 2px 0 0;
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.bar-list,
+.hotspots,
+.outlets {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.bar-row,
+.hotspot-row {
+  width: calc(100% + 16px);
+  margin: 0 -8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  border-radius: 10px;
+  text-align: left;
+  min-height: 36px;
+}
+.bar-row:hover,
+.hotspot-row:hover {
+  background: var(--fill);
+}
+.bar-label {
+  width: 104px;
+  flex: none;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bar-track {
+  flex: 1;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--fill);
+  overflow: hidden;
+}
+.bar-fill {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+}
+.bar-count {
+  font-size: 13px;
+  color: var(--label-2);
+  min-width: 26px;
+  text-align: right;
+}
+.hotspot-rank {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--fill-strong);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--label-2);
+}
+.hotspot-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.hotspot-name {
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.hotspot-sub {
+  font-size: 12px;
+  color: var(--label-2);
+}
+.hotspot-row > .icon {
+  color: var(--label-3);
+}
+.outlets li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 7px 0;
+  font-size: 14px;
+  border-bottom: 0.5px solid var(--separator);
+}
+.outlets li span:first-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.outlets li span:last-child {
+  color: var(--label-2);
+}
+
+/* ── Shortcuts dialog ─────────────────────────────────────────────────── */
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.28);
+  animation: fade 0.18s ease;
+}
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+.dialog {
+  width: min(420px, 100%);
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  border-radius: 22px;
+  padding: 8px 20px 18px;
+  background: color-mix(in srgb, var(--glass-solid) 96%, transparent);
+  animation: pop 0.22s var(--ease);
+}
+.dialog-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: -10px;
+}
+.dialog-head h2 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  margin: 10px 0;
+}
+.shortcut-list {
+  margin: 0;
+}
+.shortcut-list > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 0.5px solid var(--separator);
+  font-size: 14px;
+}
+.shortcut-list dd {
+  margin: 0;
+  display: flex;
+  gap: 4px;
+}
+.shortcut-list kbd {
+  min-width: 24px;
+  text-align: center;
+  font-size: 12px;
+  padding: 4px 6px;
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────── */
+.sidebar {
+  top: max(16px, env(safe-area-inset-top));
+  left: max(16px, env(safe-area-inset-left));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  transition: width 0.25s var(--ease);
+}
+.map-controls {
+  margin-right: env(safe-area-inset-right);
+}
+.ribbon-head {
+  flex-wrap: wrap;
+  row-gap: 4px;
+}
+
+/* Medium: tablets, small laptops, landscape phones */
+.app--medium .region-button {
+  font-size: 26px;
+}
+.app--medium .detail-bar {
+  padding-top: 4px;
+}
+
+/* Short windows: tighten the panel so the list keeps room */
+.is-short .panel-head {
+  padding: 10px 12px 8px;
+}
+.is-short .region-button {
+  font-size: 22px;
+}
+.is-short .summary-line {
+  margin-bottom: 6px;
+}
+.is-short .panel-tabs {
+  margin-top: 6px;
+}
+.is-short .segmented--full button {
+  min-height: 28px;
+  height: auto;
+}
+.is-short .panel-foot {
+  padding: 6px 12px;
+}
+.is-short .ribbon-dock {
+  bottom: max(8px, env(safe-area-inset-bottom));
+  padding: 6px 10px;
+}
+.is-short .ribbon-axis {
+  display: none;
+}
+.is-short .ribbon-bars {
+  height: 26px;
+}
+.is-short .sidebar {
+  top: max(8px, env(safe-area-inset-top));
+  bottom: max(8px, env(safe-area-inset-bottom));
+}
+.is-short .map-controls {
+  bottom: 8px;
+}
+
+/* Compact: bottom sheet */
+.app--compact .panel-tabs {
+  margin-top: 8px;
+}
+.app--compact .stat-grid dd {
+  font-size: 20px;
+}
+.sheet-content {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.sheet-content > .panel-foot {
+  margin-top: auto;
+}
+
+/* Touch: comfortable targets (HIG: 44pt default) */
+@media (pointer: coarse) {
+  .icon-button {
+    width: 40px;
+    height: 40px;
+  }
+  .map-controls .icon-button {
+    width: 44px;
+    height: 44px;
+  }
+  .pill-button {
+    min-height: 40px;
+  }
+  .segmented button {
+    min-height: 34px;
+  }
+  .row {
+    min-height: 52px;
+  }
+}
+
+/* Very narrow phones */
+@media (max-width: 360px) {
+  .segmented--full button .icon {
+    display: none;
+  }
+  .stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Short windows: the whole panel scrolls as one, so the header can scroll
+   away and the list gets the height. */
+.is-short .sidebar {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.is-short .sidebar .panel-head,
+.is-short .sidebar .panel-foot {
+  flex: none;
+}
+.is-short .sidebar-scroll {
+  flex: none;
+  overflow: visible;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+/* Popovers on phones: a sheet pinned to the bottom of the screen */
+.popover.popover--sheet {
+  position: fixed;
+  top: auto;
+  left: max(8px, env(safe-area-inset-left));
+  right: max(8px, env(safe-area-inset-right));
+  bottom: max(8px, env(safe-area-inset-bottom));
+  width: auto;
+  max-height: min(78dvh, 640px);
+  overflow-y: auto;
+  z-index: 40;
+  border-radius: 22px;
+  transform-origin: bottom;
+  box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.25), var(--shadow);
+}
+.popover--sheet .check-list {
+  max-height: none;
+}
+
+/* Source switch in the filter popover */
+.source-switch {
+  margin: 0 2px 6px;
+  width: calc(100% - 4px);
+}
+.source-switch .tab-count {
+  background: transparent;
+  color: var(--label-2);
+  padding: 0;
+}
+
+/* Translated posts */
+.translation-note {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: -6px 0 8px;
+  font-size: 12px;
+  color: var(--label-2);
+}
+.translation-note .text-button {
+  font-size: 12px;
+}
+.detail-original {
+  white-space: pre-line;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: var(--fill);
+}
+.detail-summary {
+  white-space: pre-line;
+}
+
+/* Territorial control legend (Layers menu) */
+.territory-legend {
+  display: flex !important;
+  align-items: center;
+  gap: 5px;
+}
+.swatch {
+  display: inline-block;
+  width: 12px;
+  height: 10px;
+  border-radius: 3px;
+}
+.swatch--occupied {
+  background: rgba(255, 59, 48, 0.25);
+  border: 1.5px solid #ff3b30;
+}
+.swatch--israeli {
+  background: rgba(51, 71, 224, 0.25);
+  border: 1.5px solid #3347e0;
+}
+.swatch--contested {
+  background: rgba(142, 142, 147, 0.3);
+  border: 1.5px solid #8e8e93;
+  margin-left: 6px;
+}
+.switch-row small a {
+  color: var(--accent);
+}

@@ -1,0 +1,200 @@
+/* Photos and videos attached to Telegram / X posts. */
+
+/* thumbnail on list rows */
+.row-thumb {
+  position: relative;
+  flex: none;
+  width: 52px;
+  height: 52px;
+  margin-left: auto;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--fill);
+}
+.row-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.row-thumb.is-blurred img {
+  filter: blur(8px) saturate(0.6);
+  transform: scale(1.15);
+}
+.row-thumb-play,
+.row-thumb-count {
+  position: absolute;
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.55);
+  border-radius: 6px;
+  padding: 1px 5px;
+}
+.row-thumb-play {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.row-thumb-count {
+  right: 3px;
+  bottom: 3px;
+}
+
+/* gallery in the event detail */
+.gallery {
+  position: relative;
+  display: grid;
+  gap: 4px;
+  margin: 0 0 16px;
+  border-radius: 14px;
+  overflow: hidden;
+}
+.gallery--1 {
+  grid-template-columns: 1fr;
+}
+.gallery--2,
+.gallery--3,
+.gallery--4 {
+  grid-template-columns: 1fr 1fr;
+}
+.gallery--3 .gallery-item:first-child {
+  grid-column: span 2;
+}
+.gallery-item {
+  position: relative;
+  background: var(--fill);
+  aspect-ratio: 4 / 3;
+  min-height: 0;
+}
+.gallery--1 .gallery-item {
+  aspect-ratio: 16 / 10;
+}
+.gallery-item video,
+.gallery-thumb,
+.gallery-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #000;
+}
+.gallery-thumb {
+  position: relative;
+  cursor: zoom-in;
+}
+.gallery.is-hidden .gallery-thumb img {
+  filter: blur(24px) saturate(0.6);
+  transform: scale(1.2);
+}
+.gallery-play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 15px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.55);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+.gallery-more {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.45);
+}
+.gallery-fallback {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+}
+.gallery-reveal {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.25);
+  text-align: center;
+  padding: 12px;
+}
+.gallery-reveal strong {
+  font-size: 15px;
+  padding: 7px 16px;
+  border-radius: 99px;
+  background: rgba(0, 0, 0, 0.5);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+.gallery-reveal span {
+  font-size: 12px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+/* full-screen viewer */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(0, 0, 0, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: max(16px, env(safe-area-inset-top)) 16px calc(76px + env(safe-area-inset-bottom));
+  animation: fade 0.18s ease;
+}
+.lightbox img,
+.lightbox video {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+.lightbox-bar {
+  position: absolute;
+  left: 50%;
+  bottom: max(16px, env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 99px;
+  color: #fff;
+  background: rgba(40, 40, 42, 0.8);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  font-size: 13px;
+}
+.lightbox-bar .icon-button {
+  color: #fff;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .gallery-reveal strong,
+  .lightbox-bar,
+  .gallery-play {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: rgba(0, 0, 0, 0.8);
+  }
+}
