@@ -1020,11 +1020,22 @@ kbd {
 }
 
 /* MapLibre chrome, restyled */
-.maplibregl-ctrl-bottom-right {
-  right: 64px;
+/* Credits sit in the top-right corner, clear of the timeline and map buttons,
+   and stay visible on every layout (CARTO and OpenStreetMap require it). */
+.maplibregl-ctrl-top-right {
+  top: max(8px, env(safe-area-inset-top));
+  right: max(8px, env(safe-area-inset-right));
 }
-.app--compact .maplibregl-ctrl-bottom-right {
-  display: none;
+.maplibregl-ctrl-top-right .maplibregl-ctrl-attrib:not(.maplibregl-compact) {
+  max-width: min(560px, calc(100vw - 440px));
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border-radius: 10px;
+  color: var(--label-2);
+  font-size: 11px;
+  line-height: 1.4;
+  padding: 3px 8px;
 }
 .maplibregl-ctrl-attrib.maplibregl-compact {
   background: var(--glass) !important;

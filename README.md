@@ -331,7 +331,46 @@ You can connect real data in either of two ways:
 
 Events are merged by `id`, so a feed can send updated versions of existing events.
 
+## Disclaimer
+
+Meridian is a **personal, non-commercial project**: no ads, no paid features,
+and no affiliation with any of the sources below.
+
+- Reports are collected automatically from news sites and public Telegram
+  channels and shown as published. Nothing is independently verified, and some
+  sources are parties to the conflicts.
+- Categories, locations and translations are machine-made and can be wrong.
+- Territorial-control areas are indicative; the Israeli-held zone in Gaza is
+  an approximate schematic.
+- Posts, articles, photos and videos belong to their authors. Every event links
+  to its original source.
+- Do not use this map for safety, travel or military decisions.
+
+The app shows this disclaimer on the first visit, and afterwards under
+**Disclaimer & sources** at the bottom of the side panel. Source owners who want
+their content removed or credited differently can open an
+[issue](https://github.com/tbekt/Meridian/issues).
+
 ## Credits
 
-Event data: The GDELT Project (gdeltproject.org). Map data © OpenStreetMap contributors, basemap
-tiles © CARTO. The attribution is shown on the map.
+Where each credit appears in the app:
+
+- **Every event** links to its original post or article (Sources, in the event
+  detail), with a note that it is shown as published.
+- **On the map** (top right): OpenStreetMap contributors, CARTO, GDELT,
+  GeoNames, and the territory source of the current tab (DeepStateMap, or
+  Natural Earth and geoBoundaries).
+- **Disclaimer & sources** lists them all with links and licences.
+
+| What | Source | Licence / terms |
+| --- | --- | --- |
+| News reports | [The GDELT Project](https://www.gdeltproject.org) | Free use with citation and link |
+| Social posts | Public Telegram channels (linked per event) | © the channels |
+| News articles | Al Jazeera, Alaraby TV, i24NEWS, The Times of Israel, The Jerusalem Post, Middle East Monitor (headline + link) | © the publishers |
+| Ukraine front line | [DeepStateMap](https://deepstatemap.live) | © DeepState |
+| Occupied territories | [Natural Earth](https://www.naturalearthdata.com) | Public domain |
+| Gaza boundary | [geoBoundaries](https://www.geoboundaries.org) | CC BY 4.0 |
+| Place names | [GeoNames](https://www.geonames.org) | CC BY 4.0 |
+| Basemap | [CARTO](https://carto.com/attributions), [OpenStreetMap contributors](https://www.openstreetmap.org/copyright), [OpenMapTiles](https://openmaptiles.org) | CARTO free tier (non-commercial), ODbL |
+| Map rendering | [MapLibre GL JS](https://maplibre.org) | BSD-3-Clause |
+| Translation | [Helsinki-NLP OPUS-MT](https://huggingface.co/Helsinki-NLP) via Transformers.js | Apache 2.0 / CC BY 4.0 |

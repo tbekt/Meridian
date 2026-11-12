@@ -19,6 +19,7 @@ import { Icon, type IconName } from './components/Icon';
 import { Insights } from './components/Insights';
 import { LayersButton, type LayerSettings } from './components/LayersMenu';
 import { ShortcutsDialog } from './components/ShortcutsDialog';
+import { AboutDialog } from './components/AboutDialog';
 
 const feed = createFeed();
 const GUTTER = 16;
@@ -98,6 +99,13 @@ export default function App() {
   });
   const [saved, setSaved] = usePersistentState<MapEvent[]>('saved', []);
   const [helpOpen, setHelpOpen] = useState(false);
+  // the disclaimer opens by itself until it has been read once
+  const [aboutSeen, setAboutSeen] = usePersistentState('aboutSeen', false);
+  const [aboutOpen, setAboutOpen] = useState(!aboutSeen);
+  const closeAbout = useCallback(() => {
+    setAboutOpen(false);
+    setAboutSeen(true);
+  }, [setAboutSeen]);
 
   // Occupied areas belong to their region: Russian-occupied areas only on the
   // Ukraine tab, Israeli-occupied territories only on Israel–Palestine.
@@ -608,8 +616,13 @@ export default function App() {
 
   const footer = (
     <footer className="panel-foot">
-      <span className="panel-foot-note">
-        <strong>{feed.isSample ? 'Sample data.' : `Live from ${feed.name}.`}</strong> {feed.note}
+      <span className="panel-foot-text">
+        <span className="panel-foot-note">
+          <strong>{feed.isSample ? 'Sample data.' : `Live from ${feed.name}.`}</strong> {feed.note}
+        </span>
+        <button className="link-button" onClick={() => setAboutOpen(true)}>
+          Disclaimer &amp; sources · non-commercial project
+        </button>
       </span>
       {!compact && (
         <button className="kbd-hint" onClick={() => setHelpOpen(true)} title="Keyboard shortcuts (?)">
@@ -711,6 +724,7 @@ export default function App() {
       </div>
 
       <ShortcutsDialog open={helpOpen} onClose={() => setHelpOpen(false)} />
+      <AboutDialog open={aboutOpen} onClose={closeAbout} />
     </div>
   );
 }

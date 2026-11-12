@@ -78,7 +78,7 @@ export function createHttpFeed(url: string, pollMs = 60_000): EventFeed {
   return {
     name: 'GDELT and Telegram',
     isSample: false,
-    note: 'News reports and Telegram channel posts, machine-classified and geolocated. Not independently verified.',
+    note: 'News reports and Telegram posts, machine-classified, geolocated and translated. Not verified.',
     load: get,
     subscribe(onEvents) {
       let timer: ReturnType<typeof setTimeout>;

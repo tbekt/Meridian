@@ -258,6 +258,10 @@ export function EventDetail(p: Props) {
             </li>
           ))}
         </ul>
+        <p className="source-note">
+          Shown as published by {e.sources.length > 1 ? 'these sources' : 'this source'}; not independently verified.
+          {e.media?.length ? ' Photos and videos © their authors.' : ''}
+        </p>
 
         {p.nearby.length > 0 && (
           <>

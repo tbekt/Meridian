@@ -137,7 +137,15 @@ export const MapView = forwardRef<MapHandle, Props>(function MapView(props, ref)
       maxPitch: 0,
     });
     map.touchZoomRotate.disableRotation();
-    map.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-right');
+    // CARTO and OpenStreetMap ask for a visible credit: expanded on wide screens
+    // (MapLibre collapses it to an ⓘ button on narrow ones by itself)
+    map.addControl(
+      new maplibregl.AttributionControl({
+        customAttribution:
+          'Events: <a href="https://www.gdeltproject.org" target="_blank" rel="noopener">GDELT</a>, Telegram, news sites · Places: <a href="https://www.geonames.org" target="_blank" rel="noopener">GeoNames</a>',
+      }),
+      'top-right',
+    );
     mapRef.current = map;
     if (import.meta.env.DEV) (window as unknown as { __map: unknown }).__map = map;
     popupRef.current = new maplibregl.Popup({
