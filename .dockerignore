@@ -1,0 +1,10 @@
+node_modules
+dist
+.cache
+.git
+.claude
+.env.local
+screenshots
+undefined
+*.tsbuildinfo
+server/_probe.ts

@@ -16,6 +16,38 @@ npm run build      # type-check + production build to dist/
 npm start          # production server on http://localhost:8080 (Node 22.18+)
 ```
 
+## Deploy: Vercel + Hugging Face
+
+The website is static and runs fine on Vercel, but the live data comes from a
+server that must stay on (it polls GDELT, Telegram and news sites every few
+minutes) and uses about 3 GB of memory for the place-name database and the
+translation models. Vercel can't run that, so the server runs on a free
+[Hugging Face Space](https://huggingface.co/spaces) and Vercel forwards
+`/api/*` to it (`vercel.json`).
+
+1. **Create the Space.** On huggingface.co: *New Space* → name `meridian`,
+   SDK **Docker** → *Blank*, hardware *CPU basic (free)*, public.
+2. **Add two files.** In the Space: *Files* → *Add file* → *Create a new file*,
+   and copy [`deploy/huggingface/README.md`](deploy/huggingface/README.md) and
+   [`deploy/huggingface/Dockerfile`](deploy/huggingface/Dockerfile) (replace the
+   README that's there). The Space downloads the code from GitHub and builds;
+   the first start takes a few minutes while it fetches GeoNames and the
+   translation models.
+3. **Check it.** `https://<hf-username>-meridian.hf.space/api/status` should
+   show the feeds.
+4. **Point Vercel at it.** In `vercel.json`, the rewrite destination must be your
+   Space's address (`https://<hf-username>-meridian.hf.space/api/:path*`).
+   Push to GitHub; Vercel redeploys.
+
+New code: push to GitHub, then *Settings* → *Factory rebuild* in the Space.
+Free Spaces sleep after 48 hours without visitors and wake on the next request
+(the first load then takes a minute). Settings: the committed `.env` holds the
+default channels and feeds; tokens (`X_BEARER_TOKEN`, `ANTHROPIC_API_KEY`) go
+in the Space's *Settings* → *Secrets*.
+
+The root `Dockerfile` runs the same server on any other Docker host
+(`docker build -t meridian . && docker run -p 7860:7860 meridian`).
+
 ## Features
 
 | Feature | Where |
