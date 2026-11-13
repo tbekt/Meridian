@@ -16,37 +16,48 @@ npm run build      # type-check + production build to dist/
 npm start          # production server on http://localhost:8080 (Node 22.18+)
 ```
 
-## Deploy: Vercel + Hugging Face
+## Deploy: Vercel + a free Oracle Cloud server
 
 The website is static and runs fine on Vercel, but the live data comes from a
 server that must stay on (it polls GDELT, Telegram and news sites every few
 minutes) and uses about 3 GB of memory for the place-name database and the
-translation models. Vercel can't run that, so the server runs on a free
-[Hugging Face Space](https://huggingface.co/spaces) and Vercel forwards
-`/api/*` to it (`vercel.json`).
+translation models. Vercel can't run that, so the server runs on an Oracle
+Cloud *Always Free* VM and Vercel forwards `/api/*` to it (`vercel.json`).
 
-1. **Create the Space.** On huggingface.co: *New Space* → name `meridian`,
-   SDK **Docker** → *Blank*, hardware *CPU basic (free)*, public.
-2. **Add two files.** In the Space: *Files* → *Add file* → *Create a new file*,
-   and copy [`deploy/huggingface/README.md`](deploy/huggingface/README.md) and
-   [`deploy/huggingface/Dockerfile`](deploy/huggingface/Dockerfile) (replace the
-   README that's there). The Space downloads the code from GitHub and builds;
-   the first start takes a few minutes while it fetches GeoNames and the
-   translation models.
-3. **Check it.** `https://<hf-username>-meridian.hf.space/api/status` should
-   show the feeds.
-4. **Point Vercel at it.** In `vercel.json`, the rewrite destination must be your
-   Space's address (`https://<hf-username>-meridian.hf.space/api/:path*`).
-   Push to GitHub; Vercel redeploys.
+1. **Create the VM.** Sign up at [cloud.oracle.com](https://cloud.oracle.com)
+   (a card is needed for verification; Always Free resources are not charged).
+   *Compute → Instances → Create instance*:
+   - Image: **Canonical Ubuntu 24.04**
+   - Shape: **Ampere → VM.Standard.A1.Flex**, 2 OCPUs and 12 GB memory (the
+     free allowance is 4 OCPUs / 24 GB in total)
+   - SSH keys: *Generate a key pair* and download the private key
+   - If it says *Out of capacity*, try another availability domain or later.
+2. **Open ports 80 and 443.** On the instance page: *Networking → Subnet →
+   Security → Default security list → Add ingress rules*: source `0.0.0.0/0`,
+   TCP, destination ports `80,443`.
+3. **Install.** Connect (`ssh -i <key> ubuntu@<public-ip>`) and run:
 
-New code: push to GitHub, then *Settings* → *Factory rebuild* in the Space.
-Free Spaces sleep after 48 hours without visitors and wake on the next request
-(the first load then takes a minute). Settings: the committed `.env` holds the
-default channels and feeds; tokens (`X_BEARER_TOKEN`, `ANTHROPIC_API_KEY`) go
-in the Space's *Settings* → *Secrets*.
+   ```bash
+   curl -fsSLO https://raw.githubusercontent.com/tbekt/Meridian/main/deploy/oracle/setup.sh
+   bash setup.sh
+   ```
 
-The root `Dockerfile` runs the same server on any other Docker host
-(`docker build -t meridian . && docker run -p 7860:7860 meridian`).
+   [The script](deploy/oracle/setup.sh) installs Docker, builds and starts the
+   server (restarting by itself after crashes and reboots), and puts Caddy in
+   front with a free HTTPS certificate for `<ip>.sslip.io`. It prints the
+   address to use.
+4. **Point Vercel at it.** Put that address in the `destination` of
+   `vercel.json` and push; Vercel redeploys.
+
+Update the server: run `bash setup.sh` again (it pulls the latest code). Logs:
+`sudo docker logs -f meridian`. Tokens (`X_BEARER_TOKEN`,
+`ANTHROPIC_API_KEY`) go in `/opt/meridian/.env.local` on the server, followed
+by a re-run of the script.
+
+The same `Dockerfile` runs on any other Docker host
+(`docker build -t meridian . && docker run -p 7860:7860 meridian`), and
+`deploy/huggingface/` holds a Hugging Face Space setup (Docker Spaces need a
+paid plan since 2026).
 
 ## Features
 
